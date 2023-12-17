@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Forgot Password</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='style.css'>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js'></script>
+    <script src='script.js'></script>
+</head>
+
+<body ng-app="loginApp" ng-controller="loginCtrl">
+    <h2 class="text-center mt-5">Forgot Password</h2>
+    <div class="container mt-5">
+        <form class="form mt-5" name="form" novalidate>
+            <input ng-model="user.email" class="field mt-4" type="email" name="email" id="email"
+                placeholder="Enter registered email to get otp" required><br>
+            <center><button ng-disabled="form.$invalid" ng-click="validateEmail()" class="mt-4 btn btn-primary">Request
+                    OTP</button></center><br>
+        </form>
+        <form ng-if="isEmailValid" class="otpform mt-4" name="otpform" novalidate>
+            <div class="card-body text-center">
+                <p>OTP has been sent to you via email</p>
+                <div class="otp-container">
+                    <div id="inputs" class="inputs">
+                        <input class="input" type="text" inputmode="numeric" ng-pattern="/^[0-9]/" ng-model="user.otp" ng-minlength="6" maxlength="6" required/>
+                    </div>
+                </div>
+                <center><button ng-disabled="otpform.$invalid || otpform.$pristine" ng-click="changePasswordPage()"
+                        class="mt-4 btn btn-primary">Verify</button></center><br>
+
+                <p class="resend text-muted mb-0">
+                    Didn't receive code? <a href="">Request again</a>
+                </p>
+            </div>
+        </form>
+        <div class="changePasswordPage border border-primary" id="changePasswordPage">
+            <form name="newPassForm" novalidate>
+                <div class="modal-content">
+                    <div class="passwordEye">
+                        <input ng-minlength="8" ng-model="user.password"
+                            ng-pattern="/^(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,20}$/"
+                            class="field mt-4" type="password" name="password" id="password" placeholder="New Password"
+                            required>
+                        <img src="https://media.geeksforgeeks.org/wp-content/uploads/20210917150049/eyeslash-300x240.png"
+                            id="togglePassword">
+                    </div><br>
+                    <input ng-minlength="8" ng-model="user.cpassword"
+                        ng-pattern="/^(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,20}$/"
+                        ng-click="isConfirmPass()" class="field mt-2 mb-4" type="password" name="cpassword"
+                        id="cpassword" placeholder="Confirm Password" required>
+                    <p ng-show="newPassForm.password.$error.minlength" class="text-white bg-danger">Password must be
+                        atleast 8 characters long.</p>
+                    <p ng-show="newPassForm.password.$dirty && newPassForm.password.$invalid"
+                        class="text-white bg-danger">Password must contain one number, one upper case character and one
+                        special symbol.</p>
+                    <p ng-show="newPassForm.password.$touched && isConfirmPass()" class="text-white bg-danger">Confirm
+                        Password should match with password.</p>
+
+                    <button class="close mt-5 btn btn-primary" ng-disabled="newPassForm.$invalid" ng-click="changePassword()">Change Password</button><br>
+                    <button class="closeChangePasswordPage btn btn-danger"
+                        ng-click="closeChangePasswordPage()">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+<script>
+
+    const inputs = document.getElementById("inputs");
+
+    inputs.addEventListener("input", function (e) {
+        const target = e.target;
+        const val = target.value;
+
+        if (isNaN(val)) {
+            target.value = "";
+            return;
+        }
+
+        if (val != "") {
+            const next = target.nextElementSibling;
+            if (next) {
+                next.focus();
+            }
+        }
+    });
+
+    inputs.addEventListener("keyup", function (e) {
+        const target = e.target;
+        const key = e.key.toLowerCase();
+
+        if (key == "backspace" || key == "delete") {
+            target.value = "";
+            const prev = target.previousElementSibling;
+            if (prev) {
+                prev.focus();
+            }
+            return;
+        }
+    });
+
+
+    // View Password Eye toggle
+    const togglePassword =
+        document.querySelector('#togglePassword');
+
+    const password = document.querySelector('#password');
+
+    togglePassword.addEventListener('click', function (e) {
+
+        // Toggle the type attribute 
+        const type = password.getAttribute(
+            'type') === 'password' ? 'text' : 'password';
+        password.setAttribute('type', type);
+
+        // Toggle the eye slash icon 
+        if (togglePassword.src.match(
+            "https://media.geeksforgeeks.org/wp-content/uploads/20210917145551/eye.png")) {
+            togglePassword.src =
+                "https://media.geeksforgeeks.org/wp-content/uploads/20210917150049/eyeslash.png";
+        } else {
+            togglePassword.src =
+                "https://media.geeksforgeeks.org/wp-content/uploads/20210917145551/eye.png";
+        }
+    });
+</script>
+
+</html>
+
+<!--
+     <form class="form mt-5" name="form" novalidate>
+            <input ng-model="user.email" class="field mt-4" type="email" name="email" id="email" placeholder="Enter registered email to get otp" required><br>
+            <center><button ng-disabled="form.$invalid" ng-click="validateEmail()" class="mt-4 btn btn-primary">Request OTP</button></center><br>
+        </form>
+        <form ng-if="isEmailValid" class="form mt-4" name="form" novalidate>
+            <input ng-minlength="6" ng-model="user.otp" class="field mt-4" type="text" name="otp" id="otp" placeholder="Enter 6 digit OTP" required><br>
+            <center><button ng-disabled="form.$invalid" ng-click="changePasswordPage()" class="mt-4 btn btn-primary">Verify</button><br></center><br>
+        </form>
+
+-->

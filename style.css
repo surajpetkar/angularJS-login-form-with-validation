@@ -1,0 +1,125 @@
+.container{
+    border: black solid 1px;
+    margin: 0 60%;
+}
+.form{
+    width: 50%;
+    margin-left: 25%;
+    margin-right: 25%;
+}
+input{
+    width: 100%;
+}
+.form label{
+    margin: 0 10%;
+    width: 80%;
+}
+.form span{
+    font-size: 0.8rem;
+}
+.form .terms input{
+    width: 15px;
+    height: 15px;
+    margin: 0;
+}
+
+form[novalidate] input{
+    border: 2.5px #3498db;
+    border-style: solid;
+    height: 7vh;
+}
+input[required].ng.pristine{
+    border-color: #e74c3c;
+    border-bottom-width: 6px;
+}
+input.ng-invalid.ng-dirty{
+    border-color: #e74c3c;
+    border-bottom-width: 6px;
+}
+input.ng-valid.ng-dirty{
+    border-color: #2ecc71;
+}
+
+.passwordEye{
+    display: inline;
+}
+.passwordEye img{
+    z-index: 1;
+    position: absolute;
+    margin-left: -25px;
+    margin-top: 35px;
+    cursor: pointer;
+    height: 18px;
+    width: 20px;
+}
+.termsBlock {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  }
+.termsBlock .modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 50%; /* Could be more or less, depending on screen size */
+}
+
+.changePasswordPage {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  }
+.changePasswordPage .modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 50%; /* Could be more or less, depending on screen size */
+}
+
+.card-body .otp-container { 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    min-height: 10vh;
+} 
+  
+.card-body .input { 
+    width: 100px; 
+    border: none; 
+    border-bottom: 3px solid rgba(0, 0, 0, 0.5); 
+    margin: 0 10px; 
+    text-align: center; 
+    font-size: 30px; 
+    cursor: not-allowed; 
+    pointer-events: none; 
+} 
+  
+.card-body .input:focus { 
+    border-bottom: 3px solid orange; 
+    outline: none; 
+} 
+  
+.card-body .input:nth-child(1) { 
+    cursor: pointer; 
+    pointer-events: all; 
+}  
+.resend {
+    font-size: 12px;
+  }
+

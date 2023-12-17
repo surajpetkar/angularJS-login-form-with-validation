@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Login</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='style.css'>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">  
+    <script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js'></script>
+    <script src='script.js'></script>
+</head>
+<body ng-app="loginApp" ng-controller="loginCtrl">
+    <h2 class="text-center mt-5">{{btnText}}</h2>
+    <div class="container mt-5">
+        <form class="form mt-5" name="form" novalidate>
+            <input ng-if="create" ng-model="user.fname" class="field" type="text" name="fname" id="fname" placeholder="Firstname" required><br>
+            <input ng-if="create" ng-model="user.lname" class="field mt-4" type="text" name="lname" id="lname" placeholder="LastName" required><br>
+            <input ng-if="create" ng-model="user.email" class="field mt-4" type="email" name="email" id="email" placeholder="Email" required><br>
+            <input class="field mt-4" ng-model="user.username" type="text" name="username" id="username" placeholder="Username" required><br>
+            <div class="passwordEye">
+            <input 
+                ng-minlength="8" 
+                ng-model="user.password" 
+                ng-pattern="/^(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,20}$/"
+                class="field mt-4" 
+                type="password" 
+                name="password" 
+                id="password" 
+                placeholder="Password" 
+                required>
+                <img src="https://media.geeksforgeeks.org/wp-content/uploads/20210917150049/eyeslash-300x240.png" id="togglePassword">
+            </div><br>
+            <span ng-if="login" class="mt-2"><a href="/forgotPass.html" ng-click="forgotPassword()">Forgot password</a></span>
+            <input ng-if="create" ng-minlength="8" ng-model="user.cpassword" ng-pattern="/^(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,20}$/" ng-click="isConfirmPass()" class="field mt-4" type="password" name="cpassword" id="cpassword" placeholder="Confirm Password" required><br>
+            <center>
+                <div class="terms">
+                    <input ng-if="create" ng-model="user.terms" id="termsAndCondition" type="checkbox" class="mt-4" value="1" required>
+                    <span ng-if="create">I accept the <a href="" ng-click="showTerms()">Term's and Condition</a></span>
+                </div>
+            </center>
+            <div class="termsBlock border border-primary"  id="termsBlock">
+                <div class="modal-content">
+                    <p>At no time shall MyCart hold any right, title or interest over the products nor shall MyCart have any obligations or liabilities in respect of such contract.</p>
+                    <p>MyCart is not responsible for unsatisfactory or delayed performance of services or damages or delays as a result of products which are out of stock, unavailable or back ordered.</p> 
+                    <p>Select products offered by sellers may be eligible for business purchases on the Platform.</p>
+                    <button class="close btn btn-primary" ng-click="closeTerms()">I Agree</button>
+                </div>
+            </div>
+            <p ng-if="create" ng-show="form.password.$error.minlength" class="text-white bg-danger">Password must be atleast 8 characters long.</p>
+            <p ng-if="create" ng-show="form.password.$dirty && form.password.$invalid" class="text-white bg-danger">Password must contain one number, one upper case character and one special symbol.</p>
+            <p ng-if="create" ng-show="form.password.$touched && isConfirmPass()" class="text-white bg-danger">Confirm Password should match with password.</p>
+            
+            <div class="row mt-4" ng-if="login">
+                  <a class="btn btn-outline-dark" href="/users/googleauth" role="button" style="text-transform:none">
+                    <img width="20px" style="margin-bottom:3px; margin-right:5px" alt="Google sign-in" src="google.png" />
+                    Login with Google
+                  </a>
+            </div>
+              
+            <center><button ng-disabled="form.$invalid" class="mt-5 btn btn-primary">{{btnText}}</button></center>
+            <center><span ng-if="login">New User? <a href="" ng-click="createAcc()">Create Account</a></span></center>
+            <center><span ng-if="create">Existing User? <a href="" ng-click="loginAcc()">Sign-In</a></span></center>
+        </form>
+    </div>
+    
+</body>
+<script>
+    // View Password Eye toggle
+    const togglePassword =
+        document.querySelector('#togglePassword');
+
+    const password = document.querySelector('#password');
+
+    togglePassword.addEventListener('click', function (e) {
+
+        // Toggle the type attribute 
+        const type = password.getAttribute(
+            'type') === 'password' ? 'text' : 'password';
+        password.setAttribute('type', type);
+
+        // Toggle the eye slash icon 
+        if (togglePassword.src.match(
+            "https://media.geeksforgeeks.org/wp-content/uploads/20210917145551/eye.png")) {
+            togglePassword.src =
+            "https://media.geeksforgeeks.org/wp-content/uploads/20210917150049/eyeslash.png";
+        } else {
+            togglePassword.src =
+            "https://media.geeksforgeeks.org/wp-content/uploads/20210917145551/eye.png";
+        }
+    });
+</script>
+</html>
